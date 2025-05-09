@@ -5,7 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Navbar from './components/Navbar';
 import TextForm from './components/TextForm';
 import Alert from './components/Alert';
-//hi this a test app
+//hi this a test app sahda jshdashd jas
 function App() {
   const [alert, setalert] = useState(null);
   const [normalStyle, setNormalStyle] = useState({
