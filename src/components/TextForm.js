@@ -1,60 +1,65 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
+export default function TextForm({ newColor = "black", bgColor = "white", showAlert }) {
+  const [text, setText] = useState("");
 
-
-export default function TextForm({ newColor = "black", bgColor = "white", showAlert,
-
- }) {
   const handleUpClick = () => {
-    // console.log("Uppercase was clicked" + text);
-    let newText = text.toUpperCase();
-    settext(newText);
-    showAlert("Converted to Uppercase", "success")
-  }
-  const handleClearClick = () => {
-    // console.log("Uppercase was clicked" + text);
-    let newText = "";
-    settext(newText);
-    showAlert("Text Cleared", "success")
-  }
+    setText(text.toUpperCase());
+    showAlert("Converted to Uppercase", "success");
+  };
+
   const handleDownClick = () => {
-    // console.log("Uppercase was clicked" + text);
-    let newText = text.toLowerCase();
-    settext(newText);
-    showAlert("Converted to LowerCase", "success")
-  }
+    setText(text.toLowerCase());
+    showAlert("Converted to Lowercase", "success");
+  };
+
+  const handleClearClick = () => {
+    setText("");
+    showAlert("Text Cleared", "success");
+  };
 
   const handleOnChange = (event) => {
-    // console.log("On change");
-    settext(event.target.value);
-  }
-  const [text, settext] = useState("");
+    setText(event.target.value);
+  };
+
   return (
-    <div className="textForm" style={{ color: newColor, backgroundColor: bgColor }}>
-      <h1>{"Enter your text"}</h1>
-      <div className="mb-3" >
-        <label htmlFor="myBox" className="form-label">your text should be enterd here</label>
-        <textarea className="form-control" placeholder='Enter your Text here' style={{
-          color: newColor, // optional text color
-          backgroundColor: bgColor// optional background color
-        }} value={text} onChange={handleOnChange} id="myBox" rows="8"></textarea>
+    <div className="container my-4">
+      <div className="card shadow" style={{ color: newColor, backgroundColor: bgColor }}>
+        <div className="card-body">
+          <h1 className="card-title mb-4">Enter your text</h1>
+          <div className="mb-3">
+            <label htmlFor="myBox" className="form-label">Your text should be entered here</label>
+            <textarea
+              className="form-control"
+              id="myBox"
+              rows="8"
+              placeholder="Enter your text here"
+              style={{ color: newColor, backgroundColor: bgColor }}
+              value={text}
+              onChange={handleOnChange}
+            ></textarea>
+          </div>
 
-        <button className="btn btn-primary" onClick={handleUpClick} >Convert To Uppercase</button>
+          <div className="btn-group mb-3" role="group" aria-label="Text operations">
+            <button className="btn btn-primary" onClick={handleUpClick}>Uppercase</button>
+            <button className="btn btn-secondary" onClick={handleDownClick}>Lowercase</button>
+            <button className="btn btn-danger" onClick={handleClearClick}>Clear</button>
+          </div>
 
-        <button className="btn btn-primary" onClick={handleDownClick} >Convert To Lowercase</button>
+          <div className="mt-4">
+            <h2>Summary</h2>
+            <p><b>{text.length}</b> characters, <b>{text.trim().split(/\s+/).filter(Boolean).length}</b> words</p>
+            <p>Estimated read time: <b>{(0.0042 * text.split(/\s+/).filter(Boolean).length).toFixed(2)}</b> minutes</p>
+          </div>
 
-        <button className="btn btn-primary" onClick={handleClearClick} >Clear</button>
-
-      </div>
-      <div className="summary" >
-        <h2>Summary of your text </h2>
-        <p>your text has <b>{text.length}</b> letters and <b>{text.split(" ").length -1} </b> words </p>
-        <p>user can read this text in almost <b> {0.004202 * text.split(" ").length}</b> minutes</p>
-        <h2>Preview</h2>
-        <p>{text}</p>
+          <div className="mt-4">
+            <h2>Preview</h2>
+            <p>{text.length > 0 ? text : "Nothing to preview."}</p>
+          </div>
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
 TextForm.defaultProps = {
